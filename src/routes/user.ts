@@ -33,7 +33,7 @@ userRouter.post("/signup", async (req, res) => {
         })
 
         if(user){
-            res.status(403).send("user already exists with the username");
+            res.status(403).send("username already exists");
             return;
         }
 
@@ -72,10 +72,7 @@ userRouter.post("/login", async (req,res) => {
             const token = jwt.sign({id: user._id}, "SecondBrain", {
                 expiresIn: "1d"
             });
-            res.cookie("token", token, {httpOnly: true,
-            secure: true, // only https
-            sameSite: "none",
-            maxAge: 24*60*60*1000} )
+            res.cookie("token", token)
         }
 
         res.send(user)
